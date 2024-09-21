@@ -35,4 +35,4 @@ For example:
 
 You get information about countries, administrative divisions, currencies, settlements (cities, towns, villages, hamlets). You'll need `django-terran` **and** fixtures (https://github.com/django-terran/django-terran-fixtures) because application is obviously data driven.
 
-It may be a bit hard to comprehend, so you can play with an example application (browse to http://localhost:8080/signup/signup/); or just watch a video https://youtu.be/6KFhwHkTY_Q
+It may be a bit hard to comprehend, so you can play with an example application (browse to http://localhost:8080/signup/signup/); or just watch a video https://youtu.be/5uyuUl5GV6o
