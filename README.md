@@ -1,4 +1,4 @@
-# Django Terran Fixtures
+# Django Terran
 
 This repository contains `django-terran` application.
 
