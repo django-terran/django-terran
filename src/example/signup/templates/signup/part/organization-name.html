@@ -1,0 +1,11 @@
+<div id="htmx-organization-name" hx-swap-oob="true">
+    <label for="organization-name">organization-name</label>
+    <input
+        id="organization-name"
+        name="organization_name"
+        type="text"
+        value=""
+        hx-post="{% url 'signup-htmx-preview' %}"
+        hx-trigger="change"
+        hx-target="#htmx-target" />
+</div>

@@ -1,0 +1,6 @@
+<div id="htmx-person" hx-swap-oob="true">{% if person.visible %}
+    <p>Person</p>
+    {% include "./person-id.html" %}
+    {% include "./person-name.html" %}
+    {% include "./person-phone.html" %}{% endif %}
+</div>

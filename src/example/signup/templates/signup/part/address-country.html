@@ -1,0 +1,13 @@
+{% if address_country.order == order %}<div id="htmx-address-country" hx-swap-oob="true">{% if address_country.visible %}
+    <label for="address-country">{{ address_country.label }}:&nbsp;</label><select {% if not address_country.enabled %}disabled{%endif%}
+        id="address-country"
+        name="address_country"
+        required
+        hx-post="{% url 'signup-htmx-country' %}"
+        hx-trigger="change"
+        hx-target="#htmx-target">
+        <option value="" style="visibility: hidden; display:none;"></option>
+        {% for c in address_country_choices %}
+        <option value="{{c.iso_3166_a2}}" {% if c.iso_3166_a2 == address_country.value %}selected{% endif %}>{{c.name}}</option>{% endfor %}
+    </select>{% endif %}
+</div>{% endif %}

@@ -1,0 +1,12 @@
+pre {
+    background-color: #CFCFCF;
+}
+div[id] {
+    margin-bottom: 16px;
+}
+input:invalid {
+    outline: 2px solid red;
+}
+select:invalid {
+    outline: 2px solid red;
+}

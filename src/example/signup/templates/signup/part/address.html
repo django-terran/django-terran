@@ -1,0 +1,15 @@
+<div id="htmx-address" hx-swap-oob="true">
+    <p>Address</p>
+    {% for order in address_order_range %}
+    {% include "./address-country.html" %}
+    {% include "./address-level1area.html" %}
+    {% include "./address-level2area.html" %}
+    {% include "./address-postcode.html" %}
+    {% include "./address-settlement.html" %}
+    {% include "./address-street.html" %}
+    {% include "./address-street-line0.html" %}
+    {% include "./address-street-line1.html" %}
+    {% include "./address-street-line2.html" %}
+    {% include "./address-street-line3.html" %}
+    {% endfor%}
+</div>

@@ -1,0 +1,14 @@
+{% if address_postcode.order == order %}<div id="htmx-address-postcode" hx-swap-oob="true">{% if address_postcode.visible %}
+    <label for="address-postcode">{{ address_postcode.label }}:&nbsp;</label><input
+        id="address-postcode"
+        name="address_postcode"
+        type="text"
+        required
+        pattern="{{ address_postcode.pattern }}"
+        placeholder="{{ address_postcode.example }}"
+        value=""
+        hx-post="{% url 'signup-htmx-preview' %}"
+        hx-trigger="keyup changed delay:500ms"
+        hx-target="#htmx-target" />{% else %}
+        <input id="address-postcode" name="address_postcode" type="hidden" />{% endif %}
+</div>{% endif %}

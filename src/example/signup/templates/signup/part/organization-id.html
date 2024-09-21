@@ -1,0 +1,14 @@
+<div id="htmx-organization-id" hx-swap-oob="true">{% if organization_id.visible %}
+    <label for="organization-id">{{ organization_id.label }}:&nbsp;</label>
+    <input
+        id="organization-id"
+        name="organization_id"
+        type="text"
+        required
+        pattern="{{ organization_id.pattern }}"
+        placeholder="{{ organization_id.example }}"
+        value=""
+        hx-post="{% url 'signup-htmx-preview' %}"
+        hx-trigger="change"
+        hx-target="#htmx-target" />{% endif %}
+</div>

@@ -1,0 +1,13 @@
+<div id="htmx-bank-iban" hx-swap-oob="true">{% if bank_iban.visible %}
+    <label for="bank-iban">{{ bank_iban.label }}:&nbsp;</label>
+    <input
+        id="bank-iban"
+        name="bank_iban"
+        type="text"
+        pattern="{{ bank_iban.pattern }}"
+        placeholder="{{ bank_iban.example }}"
+        value=""
+        hx-post="{% url 'signup-htmx-preview' %}"
+        hx-trigger="change"
+        hx-target="#htmx-target" />{% endif %}
+</div>

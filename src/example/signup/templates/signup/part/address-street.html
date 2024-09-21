@@ -1,0 +1,11 @@
+{% if address_street.order == order %}<div id="htmx-address-street" hx-swap-oob="true">{% if address_street.visible %}
+    <label for="address-street">{{ address_street.label }}:&nbsp;</label><br/><textarea
+        id="address-street"
+        name="address_street"
+        rows="4"
+        cols="50"
+        required
+        hx-post="{% url 'signup-htmx-preview' %}"
+        hx-trigger="keyup changed delay:500ms"
+        hx-target="#htmx-target" >{{ address_street.value }}</textarea>{% endif %}
+</div>{% endif %}

@@ -1,0 +1,11 @@
+<div id="htmx-bank-account" hx-swap-oob="true">{% if bank_account.visible %}
+    <label for="bank-account">Non IBAN account details. Long text.</label><br/>
+    <textarea
+        id="bank-account"
+        name="bank_account"
+        rows="6"
+        cols="50"
+        hx-post="{% url 'signup-htmx-preview' %}"
+        hx-trigger="change"
+        hx-target="#htmx-target" ></textarea>{% endif %}
+</div>

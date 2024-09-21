@@ -1,0 +1,19 @@
+{% if address_settlement.order == order %}
+<div id="htmx-address-settlement" hx-swap-oob="true">{% if address_settlement.visible %}
+    <label for="address-settlement"> {{ address_settlement.label }}:&nbsp;</label><input
+        id="address-settlement"
+        name="address_settlement"
+        type="text"
+        required
+        value="{{ address_settlement.value }}"
+        list="settlements"
+        hx-post="{% url 'signup-htmx-preview' %}"
+        hx-trigger="keyup changed delay:500ms"
+        hx-target="#htmx-target" />
+    <datalist id="settlements">
+        {% for c in address_settlement_choices %}
+        <option value="{{c.name}}" />{% endfor %}
+    </datalist>{% else %}
+    <input id="address-settlement" name="address_settlement" type="hidden" />{% endif %}
+</div>{% endif %}
+

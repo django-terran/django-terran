@@ -1,0 +1,14 @@
+{% if address_level1area.order == order %}<div id="htmx-address-level1area" hx-swap-oob="true">{% if address_level1area.visible %}
+    <label for="address-level1area">{{ address_level1area.label }}:&nbsp;</label><select {% if not address_level1area.enabled %}disabled{%endif%}
+        id="address-level1area"
+        name="address_level1area"
+        required
+        hx-post="{% url 'signup-htmx-level1area' %}"
+        hx-trigger="change"
+        hx-target="#htmx-target">
+        <option value="" style="visibility: hidden; display:none;"></option>
+        {% for c in address_level1area_choices %}
+        <option value="{{c.iso_3166_a2}}" {% if c.iso_3166_a2 == address_level1area.value %}selected{% endif %}>{{c.name}}</option>{% endfor %}
+    </select>{% else %}
+    <input id="address-level1area" name="address_level1area" type="hidden" />{% endif %}
+</div>{% endif %}

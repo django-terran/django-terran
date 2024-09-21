@@ -1,0 +1,13 @@
+<div id="htmx-organization-phone" hx-swap-oob="true">
+    <label for="organization-phone">{{ organization_phone.label }}:&nbsp;</label>
+    <input
+        id="organization-phone"
+        name="organization_phone"
+        type="text"
+        pattern="{{ organization_phone.pattern }}"
+        placeholder="{{ organization_phone.example }}"
+        value=""
+        hx-post="{% url 'signup-htmx-preview' %}"
+        hx-trigger="change"
+        hx-target="#htmx-target" />
+</div>

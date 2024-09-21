@@ -1,0 +1,20 @@
+<div id="htmx-entity" hx-swap-oob="true">
+    <p>Entity Type</p>
+    <div id="htmx-entity-type">
+        <input
+            type="radio"
+            id="entity-person"
+            name="entity"
+            value="person"
+            hx-post="{% url 'signup-htmx-entity' %}" hx-trigger="change" hx-target="#htmx-target">
+        <label for="entity-person">Person</label><br>
+        <input
+            type="radio"
+            id="entity-organization"
+            name="entity"
+            value="organization"
+            hx-post="{% url 'signup-htmx-entity' %}" hx-trigger="change" hx-target="#htmx-target">
+        <label for="entity-organization">Organization</label><br>
+    </div>
+</div>
+

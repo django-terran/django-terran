@@ -1,0 +1,11 @@
+{% if address_street_line1.order == order %}<div id="htmx-address-street-line1" hx-swap-oob="true">{% if address_street_line1.visible %}
+    <label for="address-street-line1">{{ address_street_line1.label }}:&nbsp;</label><input
+        id="address-street-line1"
+        name="address_street_line1"
+        type="text"
+        value="{{ address_street_line1.value }}"
+        required
+        hx-post="{% url 'signup-htmx-preview' %}"
+        hx-trigger="keyup changed delay:500ms"
+        hx-target="#htmx-target" />{% endif %}
+</div>{% endif %}
