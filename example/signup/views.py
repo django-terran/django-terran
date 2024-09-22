@@ -10,6 +10,7 @@ from terran.models import Level1Area
 from terran.models import Level2Area
 from terran.models import Settlement
 
+
 def get_context_from_request(form_data: dict):
     entity = form_data.get("entity")
     address_country_iso3166_a2 = form_data.get("address_country", "")
@@ -246,10 +247,10 @@ def get_context_from_request(form_data: dict):
 
         # Many capitals are settlements AND administrative divisions.
         if (
-            (address_level1area is not None) and
-            (not address_settlement) and
-            (len(address_settlement_choices) == 1) and
-            (address_settlement_choices[0].name == address_level1area.name)
+            (address_level1area is not None)
+            and (not address_settlement)
+            and (len(address_settlement_choices) == 1)
+            and (address_settlement_choices[0].name == address_level1area.name)
         ):
             context["address_settlement"]["value"] = address_level1area.name
 
@@ -386,29 +387,62 @@ def get_context_from_request(form_data: dict):
         recipient_text = ""
 
     if address_country:
-        street_text = address_street if address_street else (
-            "\n".join([address_street_line0, address_street_line1, address_street_line2, address_street_line3]).strip()
+        street_text = (
+            address_street
+            if address_street
+            else (
+                "\n".join(
+                    [
+                        address_street_line0,
+                        address_street_line1,
+                        address_street_line2,
+                        address_street_line3,
+                    ]
+                ).strip()
+            )
         )
 
         template = Template(address_country.address_output_format)
-        context["preview"] = template.render(Context({
-            "has_country": address_country is not None,
-            "has_level1area": (address_country is not None) and (address_level1area is not None),
-            "has_level2area": (address_country is not None) and (address_level2area is not None),
-            "has_postcode": len(address_postcode) > 0,
-            "has_recipient": len(recipient_text) > 0,
-            "has_settlement": len(address_settlement) > 0,
-            "has_street": len(street_text) > 0,
-            "country_name": address_country.name if address_country else None,
-            "level1area_code": address_level1area.iso_3166_a2[2:].upper() if (address_country and address_level1area) else None,
-            "level1area_name": address_level1area.name if (address_country and address_level1area) else None,
-            "level2area_code": address_level2area.iso_3166_a2[2:].upper() if (address_country and address_level2area) else None,
-            "level2area_name": address_level2area.name if (address_country and address_level2area) else None,
-            "postcode_text": address_postcode ,
-            "recipient_text": recipient_text,
-            "settlement_text": address_settlement,
-            "street_text": street_text,
-        }))
+        context["preview"] = template.render(
+            Context(
+                {
+                    "has_country": address_country is not None,
+                    "has_level1area": (address_country is not None)
+                    and (address_level1area is not None),
+                    "has_level2area": (address_country is not None)
+                    and (address_level2area is not None),
+                    "has_postcode": len(address_postcode) > 0,
+                    "has_recipient": len(recipient_text) > 0,
+                    "has_settlement": len(address_settlement) > 0,
+                    "has_street": len(street_text) > 0,
+                    "country_name": address_country.name if address_country else None,
+                    "level1area_code": (
+                        address_level1area.iso_3166_a2[2:].upper()
+                        if (address_country and address_level1area)
+                        else None
+                    ),
+                    "level1area_name": (
+                        address_level1area.name
+                        if (address_country and address_level1area)
+                        else None
+                    ),
+                    "level2area_code": (
+                        address_level2area.iso_3166_a2[2:].upper()
+                        if (address_country and address_level2area)
+                        else None
+                    ),
+                    "level2area_name": (
+                        address_level2area.name
+                        if (address_country and address_level2area)
+                        else None
+                    ),
+                    "postcode_text": address_postcode,
+                    "recipient_text": recipient_text,
+                    "settlement_text": address_settlement,
+                    "street_text": street_text,
+                }
+            )
+        )
 
     return context
 
@@ -471,7 +505,9 @@ class SignUpFindMeView(View):
         settlement = None
 
         for s in settlements:
-            d = (s.latitude - latitude) ** 2 + ((s.longitude - longitude) * cos(s.latitude)) ** 2
+            d = (s.latitude - latitude) ** 2 + (
+                (s.longitude - longitude) * cos(s.latitude)
+            ) ** 2
 
             if d < distance:
                 distance = d
