@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.template import Context
 from django.template import Template
 from django.views import View
+from math import cos
 
 from terran.models import Country
 from terran.models import Level1Area
@@ -470,7 +471,8 @@ class SignUpFindMeView(View):
         settlement = None
 
         for s in settlements:
-            d = (s.latitude - latitude) ** 2 + (s.longitude - longitude) ** 2
+            d = (s.latitude - latitude) ** 2 + ((s.longitude - longitude) * cos(s.latitude)) ** 2
+
             if d < distance:
                 distance = d
                 settlement = s

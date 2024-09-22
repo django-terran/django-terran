@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "django-terran"
+dynamic = ["version"]
+authors = [
+  { name="Roman", email="roman@adontz.com" },
+]
+description = "Internationalization of your sign up, registration form or other data collection"
+readme = "README.md"
+requires-python = ">=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "Django",
+]
+[project.urls]
+Homepage = "https://github.com/django-terran/django-terran/"
+Issues = "https://github.com/django-terran/django-terran/issues"
+
+[tool.setuptools.dynamic]
+version = {attr = "terran.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["terran*"]
+namespaces = false
