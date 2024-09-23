@@ -22,7 +22,7 @@ For example:
         - Whatever is State is one country may be Province, Governorate or County in another.
         - Post codes are called ZIP codes in US and Post indexes in Russia.
 - Phone numbers
-    - A country may have more than one calling code. Kazakhstan has four: "71", "72", "75", "76", "77". Dominican repulic has three: "1809", "1829", "1849".
+    - A country may have more than one calling code. Kazakhstan has four: "71", "72", "75", "76", "77". Dominican Repulic has three: "1809", "1829", "1849".
     - Length of a phone number is not fixed. In Germany phone number may anything be between 6 and 12 digits.
 - Organization Identifiers
     - Some countries assign a unique identifier to all organizations, some do not. Format of that organization identifier is country specific.
@@ -35,15 +35,121 @@ For example:
 
 You get information about countries, administrative divisions, currencies, settlements (cities, towns, villages, hamlets). You'll need `django-terran` **and** fixtures (https://github.com/django-terran/django-terran-fixtures) because application is obviously data driven.
 
+### Examples
+
+1. Belarus
+
+    Address has one level of administartive divisions which are called Region.
+
+    Belarus has post codes which must look like "{6 digits}".
+
+    Address is written as:
+    ```
+    Belarus
+    Region
+    PostCode Settlement
+    District, road, house number
+    ```
+    Belarus has IBAN which must look like "BY{2 digits}{2 symbols}{4 digits}{16 symbols}".
+
+    Calling code of Belarus is +375.
+
+    There is a government registry of organizations in Belarus.
+    Organization ID is called "VAT identification number" and must look like "{9 digits}".
+
+1. France
+
+    Address has one or two levels of administartive divisions which are called Region and Department.
+
+    France has post codes which must look like "{5 digits}".
+
+    Address is written as:
+    ```
+    House number, road
+    PostCode, Settlement
+    Region, Department
+    France
+    ````
+    France has IBAN which must look like "FR{12 digits}{11 symbols}{2 digits}".
+
+    Calling code of France is +33.
+
+    There is a government registry of organizations in France.
+    Organization ID is called "VAT identification number" and must look like "FR{2 symbols}{9 digits}".
+
+1. Georgia
+
+    Address has one level of administartive divisions which are called Mkhare.
+
+    Georgia has post codes which must look like "{4 digits}".
+
+    Post codes are called post indexes.
+    Address is written as:
+    ```
+    House number, road
+    PostCode Settlement
+    Mkhare
+    Georgia
+    ```
+    Georgia has IBAN which must look like "GE{2 digits}{2 letters}{16 digits}".
+
+    Calling code of Georgia is +995.
+
+    There is a government registry of organizations in Georgia.
+    Organization ID is called "Identificaion Code" and must look like "{9 digits}".
+
+    There is a government registry of people in Georgia.
+    Person ID is called "Personal Number" and must look like "{11 digits}".
+
+1. United Arab Emirates
+
+    Address has one level of administartive divisions which are called Emirate.
+
+    UAE has no post codes.
+
+    Address is written as:
+    ```
+    House number, road, district
+    Settlement
+    Emirate
+    United Arab Emirates
+    ```
+    UAE has no IBAN.
+
+    Calling code of UAE is +971.
+
+1. United Stated of America
+
+    Address has one level of administartive divisions which are called State.
+
+    USA has post codes which must look like "{5 digits}" optionally followed by a dash and additional digits.
+    Post codes are called ZIP codes.
+
+    Address is written as:
+    ```
+    House number, road,
+    Apartment or unit,
+    Settlement, State abbreviation, ZIP code
+    United States of America
+    ```
+    Calling code of USA is +1
+
+    There is a government registry of organizations in USA.
+    Organization ID is called "Employer Identification Number" and must look like "{9 digits}".
+
+    There is a government registry of people in USA, but we pretend there is not, since SSN is very confidential.
+    If your web-site collects SSN, you may configure that in data/user/countries/US.json file and regenerate fixtures.
+
+
 It may be a bit hard to comprehend, so you can play with an example application (browse to http://localhost:8080/signup/signup/); or just watch a video https://youtu.be/5uyuUl5GV6o
 
 ## How can I help?
 
 Except obvious, help with data https://github.com/django-terran/django-terran-data#how-can-i-help
 
-## Detaild description of Models
+## Detailed description of Models
 
-### Currency
+### [Currency](terran/models/currency.py#L24)
 
 - iso_4217_n3 [^1]
 
@@ -61,7 +167,7 @@ Except obvious, help with data https://github.com/django-terran/django-terran-da
 
     Number of decimal digits. While most currencies have two digits, not all currencies do.
 
-### Country
+### [Country](terran/models/country.py#L38)
 
 - iso_3166_n3 [^1]
 
@@ -131,7 +237,7 @@ Except obvious, help with data https://github.com/django-terran/django-terran-da
 
     A dictionary with names of street part.
     Keys are locale codes supported by Django, see `django.conf.global_settings.LANGUAGES`.
-    If street part should be split in lines (like in USA), exach value is not a string, but an array of strings.
+    If street part should be split in lines (like in USA), each value is not a string, but an array of strings.
 - address_postcode_names [^3]
 
     A dictionary with names of post code; or null if country has no post code.
@@ -220,7 +326,7 @@ Except obvious, help with data https://github.com/django-terran/django-terran-da
     Backreferences are declared with Python syntax \\{n}.
     Python syntax for backreferences can be converted into JavaScript syntax with a simple str.replace("\\", "$").
 
-### CountryCurrency(Model):
+### [CountryCurrency](terran/models/country.py#L239)
 - id
 
     Primary key, unique identifier.
@@ -238,7 +344,7 @@ Except obvious, help with data https://github.com/django-terran/django-terran-da
 
     Until when this currency was a valid legal tender.
 
-### Level1Area
+### [Level1Area](terran/models/level1area.py#L24)
 
 - id
 
@@ -254,7 +360,7 @@ Except obvious, help with data https://github.com/django-terran/django-terran-da
 
     A dictionary with names.
     Keys are locale codes supported by Django, see `django.conf.global_settings.LANGUAGES`.
-- expando [^2]
+- expando [^2][^3]
 
     Some loosely structured additional data. No promises, format may change with each release.
     The following properties are often present:
@@ -275,7 +381,7 @@ Except obvious, help with data https://github.com/django-terran/django-terran-da
         A dictionary of Wikipedia page names.
         Keys are Wikipedia languages.
 
-### Level2Area
+### [Level2Area](terran/models/level2area.py#L25)
 
 - id
 
@@ -295,7 +401,7 @@ Except obvious, help with data https://github.com/django-terran/django-terran-da
 
     A dictionary with names.
     Keys are locale codes supported by Django, see `django.conf.global_settings.LANGUAGES`.
-- expando [^2]
+- expando [^2][^3]
 
     Some loosely structured additional data. No promises, format may change with each release.
     The following properties are often present:
@@ -316,17 +422,20 @@ Except obvious, help with data https://github.com/django-terran/django-terran-da
         A dictionary of Wikipedia page names.
         Keys are Wikipedia languages.
 
-### Settlement
+### [Settlement](terran/models/settlement.py#L31)
 
 **DO NOT reference this model.**
-List of settlements is not exhaustive and will never be exhaustive.
-There is no way to list all settlements around the globe.
-Use Settlement model to suggest in autocomplete scenarios; or to find a settlement by coordinates.
+
+List of settlements is not exhaustive or up to date and will never be exhaustive and up to date.
+There is no way to list all currently populated settlements around the globe.
+Use Settlement model to suggest in autocomplete scenarios; or to find a settlement by latitude and longitude.
 
 - id
 
     Primary key, unique identifier.
-    Equals Open Street Map node ID, but it is implementation detail. You should not rely on that.
+    If comes from Open Street Map, then equals to Open Street Map node ID.
+    However, that is implementation detail. You should not rely on that.
+    Better use "open_street_map_type" and "open_street_map_id" from expando attribute.
 - country [^2]
 
     Reference to the country to which Settlement belongs.
@@ -346,13 +455,11 @@ Use Settlement model to suggest in autocomplete scenarios; or to find a settleme
 
     A type of place.
     City, town, village, or hamlet.
-
 - population [^2]
 
     Population of the settlement.
     May be zero. While value of zero may not make sence at first, remember that Open Street Map data is not complete.
-    Used to prefer larger settlements in autocomplete suggestions.
-
+    Use to prefer larger settlements in autocomplete suggestions.
 - latitude [^2]
 
     Latitude of the settlement. Latitude ranges from -90 to 90 degrees.
@@ -361,18 +468,28 @@ Use Settlement model to suggest in autocomplete scenarios; or to find a settleme
 
     Longitude of the settlement. Longitude ranges from -180 to 180 degrees.
     When comes from Open Street Map precision is 7 decimal digits.
-
 - geocell [^2]
 
     A value between 0 and 6483600, geographic cell index
-    A geographic cell is a rectange 0.1 degree latitude by 0.1 degree longitude.
-    A geographic cell is a rectange approximately 11x11 km or smaller.
+    A geographic cell is a rectange exactly 0.1 degree latitude by 0.1 degree longitude.
+    A geographic cell is a rectange approximately 11 km by 11 km or smaller. Closer to the poles rectangle becomes narrow.
     A geographic cell is an effective way to find settlement from latitude and longitude without invoving a GIS engine.
     Settlement.get_geocells gets values of 9 cells surrounding given coordinates.
     ```python
+    # Settlement.get_geocells returns 9 or more cells around the point of interest.
+    # +------+------+------+
+    # |      |      |      |
+    # |      |      |      |
+    # +------+------+------+
+    # |      |      |      |
+    # |      | x    |      |
+    # +------+------+------+
+    # |      |      |      |
+    # |      |      |      |
+    # +------+------+------+
     # Algorithm to find the closest to the coordinates settlement, but not too far away.
     candidate_settlements = Settlement.objects.filter(geocell__in=Settlement.get_geocells(latitude, longitude))
-    distance = 1000
+    distance = 10000
     settlement = None
 
     for candidate_settlement in candidate_settlements:
@@ -385,7 +502,7 @@ Use Settlement model to suggest in autocomplete scenarios; or to find a settleme
             settlement = candidate_settlement
     ```
 
-- expando [^2]
+- expando [^2][^3]
 
     Some loosely structured additional data. No promises, format may change with each release.
     The following properties are often present:
