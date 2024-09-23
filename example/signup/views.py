@@ -498,22 +498,12 @@ class SignUpFindMeView(View):
     def get(self, request, *args, **kwargs):
         latitude = float(request.GET.get("latitude"))
         longitude = float(request.GET.get("longitude"))
-        distance = 1000
-        settlements = Settlement.objects.filter(
-            geocell__in=Settlement.get_geocells(latitude, longitude)
-        )
-        settlement = None
+        settlement = Settlement.objects.get_closest(latitude, longitude)
 
-        for s in settlements:
-            d = (s.latitude - latitude) ** 2 + (
-                (s.longitude - longitude) * cos(s.latitude)
-            ) ** 2
+        if not settlement:
+            return JsonResponse(data={})
 
-            if d < distance:
-                distance = d
-                settlement = s
-
-        result = {
+        return JsonResponse(data={
             "address_country": settlement.country.iso_3166_a2,
             "address_level1area": (
                 settlement.level1area.iso_3166_a2 if settlement.level1area else None
@@ -522,6 +512,4 @@ class SignUpFindMeView(View):
                 settlement.level2area.iso_3166_a2 if settlement.level2area else None
             ),
             "address_settlement": settlement.name,
-        }
-
-        return JsonResponse(data=result)
+        })

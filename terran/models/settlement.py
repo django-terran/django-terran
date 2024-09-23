@@ -9,7 +9,10 @@ from django.db.models import Index
 from django.db.models import IntegerField
 from django.db.models import JSONField
 from django.db.models import Model
+from django.db.models import Manager
 from django.db.models import UniqueConstraint
+from math import cos
+from math import radians
 
 
 SETTLEMENT_PLACE_TYPE_CHOICES = [
@@ -28,7 +31,44 @@ SETTLEMENT_PLACE_TYPE_CHOICES = [
 # A double-precision floating-point number can store 14-16 decimal digits. Assuming up to three digits for the whole part (with 180 being the maximum absolute value) and seven digits for the fractional part, this adds up to 10 decimal digits. Therefore, double-precision floating-point numbers are more than adequate for storing longitude and latitude.
 
 
+class SettlementManager(Manager):
+    def filter_neighbors(self, latitude: float, longitude: float):
+        lat_index = int(10 * (latitude + 90))
+        lat_lower = lat_index - 1
+        lat_upper = lat_index + 2
+        lon_width = min(9, int(3.3 / (0.1 + cos(radians(latitude)))))
+        lon_index = int(10 * (longitude + 180))
+        lon_lower = lon_index - lon_width
+        lon_upper = lon_index + lon_width + 1
+        geocells = []
+
+        for lat in range(lat_lower, lat_upper):
+            for lon in range(lon_lower, lon_upper):
+                geocells.append(3600 * ((lat + 1800) % 1800) + (lon + 3600) % 3600)
+
+        geocells = sorted(geocells)
+
+        return self.filter(geocell__in=geocells)
+
+    def get_closest(self, latitude: float, longitude: float):
+        settlements = self.filter_neighbors(latitude, longitude)
+        closest_settlement = None
+        closest_distance = 100000
+
+        for settlement in settlements:
+            distance = (settlement.latitude - latitude) ** 2
+            +(((settlement.longitude - longitude) * cos(radians(latitude))) ** 2)
+
+            if distance < closest_distance:
+                closest_distance = distance
+                closest_settlement = settlement
+
+        return closest_settlement
+
+
 class Settlement(Model):
+    objects = SettlementManager()
+
     id = IntegerField(primary_key=True, editable=False)
     country = ForeignKey(Country, CASCADE, related_name="settlements", editable=False)
     level1area = ForeignKey(
@@ -109,28 +149,3 @@ class Settlement(Model):
         value = str(int(self.longitude * 10000000))
 
         return value[:-7] + "." + value[-7:]
-
-    @staticmethod
-    def get_geocell(latitude: float, longitude: float):
-        latitude = int(10 * (latitude + 90))
-        longitude = int(10 * (longitude + 180))
-
-        return 3600 * latitude + longitude
-
-    # Get geocell indexes for a 3x3 matrix around the coordinates.
-    @staticmethod
-    def get_geocells(latitude: float, longitude: float):
-        latitude = int(10 * (latitude + 90))
-        longitude = int(10 * (longitude + 180))
-
-        return [
-            3600 * (latitude - 1) + longitude - 1,
-            3600 * (latitude - 1) + longitude,
-            3600 * (latitude - 1) + longitude + 1,
-            3600 * (latitude) + longitude - 1,
-            3600 * (latitude) + longitude,
-            3600 * (latitude) + longitude + 1,
-            3600 * (latitude + 1) + longitude - 1,
-            3600 * (latitude + 1) + longitude,
-            3600 * (latitude + 1) + longitude + 1,
-        ]
