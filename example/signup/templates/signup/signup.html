@@ -40,53 +40,32 @@
 
             if (response.ok) {
                 const result = await response.json();
+                const addressCountry = document.getElementById("address-country");
+                const addressLevel1Area = document.getElementById("address-level1area");
+                const addressLevel2Area = document.getElementById("address-level2area");
+                const addressSettlement = document.getElementById("address-settlement");
 
-                document.querySelector("#address-country").addEventListener(
-                    "htmx:after-swap",
-                    function() {
-                        console.log("#address-country htmx:after-swap");
-
-                        if (result["address_level1area"] !== null) {
-                            document.querySelector("#address-level1area").addEventListener(
-                                "htmx:after-swap",
-                                function () {
-                                    if (result["address_level2area"] !== null) {
-                                        document.getElementById("address-level2area").value = result["address_level2area"];
-                                        document.getElementById("address-settlement").value = result["address_settlement"];
-                                        htmx.trigger("#address-level2area", "change");
-                                    }
-                                },
-                                {
-                                    once: true,
-                                }
-                            );
-
-
-                            htmx.trigger("#address-level1area", "change");
-                        }
-                    },
-                    {
-                        once: true,
-                    });
-
-                document.getElementById("address-country").value = result["address_country"];
-
-                console.log(result["address_level1area"]);
-                console.log(result["address_level2area"]);
-                console.log(result["address_settlement"]);
+                addressCountry.value = result["address_country"];
 
                 if (result["address_level1area"] != null) {
-                    document.getElementById("address-level1area").value = result["address_level1area"];
+                    const newOption = document.createElement('option');
+
+                    newOption.value = result["address_level1area"]
+                    addressLevel1Area.appendChild(newOption);
+                    addressLevel1Area.value = result["address_level1area"];
                 }
 
                 if (result["address_level2area"] != null) {
-                    document.getElementById("address-level2area").value = result["address_level2area"];
+                    const newOption = document.createElement('option');
+
+                    newOption.value = result["address_level2area"]
+                    addressLevel2Area.appendChild(newOption);
+                    addressLevel2Area.value = result["address_level2area"];
                 }
 
-                document.getElementById("address-settlement").value = result["address_settlement"];
+                addressSettlement.value = result["address_settlement"];
 
                 htmx.trigger("#address-country", "change");
-                console.log("#address-country change");
             }
         }
         async function findme() {
