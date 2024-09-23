@@ -223,11 +223,11 @@ Except obvious, help with data https://github.com/django-terran/django-terran-da
     - street_text
 - address_level1area_names [^1]
 
-    A dictionary with names of level 1 administrative unit; or null if country has no level 1 administrative unit.
+    A dictionary with names of level 1 administrative divisions; or null if country has no level 1 administrative divisions.
     Keys are locale codes supported by Django, see `django.conf.global_settings.LANGUAGES`.
 - address_level2area_names [^1]
 
-    A dictionary with names of level 2 administrative unit; or null if country has no level 2 administrative unit.
+    A dictionary with names of level 2 administrative divisions; or null if country has no level 2 administrative divisions.
     Keys are locale codes supported by Django, see `django.conf.global_settings.LANGUAGES`.
 - address_settlement_names [^3]
 
@@ -476,30 +476,8 @@ Use Settlement model to suggest in autocomplete scenarios; or to find a settleme
     A geographic cell is an effective way to find settlement from latitude and longitude without invoving a GIS engine.
     Settlement.get_geocells gets values of 9 cells surrounding given coordinates.
     ```python
-    # Settlement.get_geocells returns 9 or more cells around the point of interest.
-    # +------+------+------+
-    # |      |      |      |
-    # |      |      |      |
-    # +------+------+------+
-    # |      |      |      |
-    # |      | x    |      |
-    # +------+------+------+
-    # |      |      |      |
-    # |      |      |      |
-    # +------+------+------+
-    # Algorithm to find the closest to the coordinates settlement, but not too far away.
-    candidate_settlements = Settlement.objects.filter(geocell__in=Settlement.get_geocells(latitude, longitude))
-    distance = 10000
-    settlement = None
-
-    for candidate_settlement in candidate_settlements:
-        candidate_distance = (
-            (candidate_settlement.latitude - latitude) ** 2
-            + ((candidate_settlement.longitude - longitude) * cos(candidate_settlement.latitude)) ** 2)
-
-        if candidate_distance < distance:
-            distance = candidate_distance
-            settlement = candidate_settlement
+    # To find the closest to the coordinates settlement, but not too far away, use get_closest.
+    settlement = Settlement.objects.get_closest(latitude, longitude)
     ```
 
 - expando [^2][^3]
