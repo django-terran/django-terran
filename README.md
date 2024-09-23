@@ -474,6 +474,11 @@ Use Settlement model to suggest in autocomplete scenarios; or to find a settleme
     A geographic cell is a rectange exactly 0.1 degree latitude by 0.1 degree longitude.
     A geographic cell is a rectange approximately 11 km by 11 km or smaller. Closer to the poles rectangle becomes narrow.
     A geographic cell is an effective way to find settlement from latitude and longitude without invoving a GIS engine.
+
+    There are about 7.64 settlements per geocell on average.
+    Geocell 3285343 (Uganda) has 992 settlements which is the most.
+    Geocell 2990876 (Indonesia) has 34 settlements which is the most for settlements with 10 thousands or more of population.
+
     Settlement.get_geocells gets values of 9 cells surrounding given coordinates.
     ```python
     # To find the closest to the coordinates settlement, but not too far away, use get_closest.
