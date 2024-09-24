@@ -4,6 +4,8 @@ This repository contains `django-terran` application.
 
 ## What is Django Terran?
 
+**TLDR**: https://youtu.be/5uyuUl5GV6o
+
 Django terran helps you with internationalization of your sign up, registration form or other data collection.
 
 Bad/good news: all countries are different.
@@ -145,7 +147,7 @@ It may be a bit hard to comprehend, so you can play with an example application 
 
 ## How can I help?
 
-Except obvious, help with data https://github.com/django-terran/django-terran-data#how-can-i-help
+Except obvious, help with data https://github.com/django-terran/django-terran-data?tab=readme-ov-file#how-can-i-help
 
 ## Detailed description of Models
 
