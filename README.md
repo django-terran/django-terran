@@ -481,9 +481,8 @@ Use Settlement model to suggest in autocomplete scenarios; or to find a settleme
     Geocell 3285343 (Uganda) has 992 settlements which is the most.
     Geocell 2990876 (Indonesia) has 34 settlements which is the most for settlements with 10 thousands or more of population.
 
-    Settlement.get_geocells gets values of 9 cells surrounding given coordinates.
+    To find the closest to the coordinates settlement, but not too far away, use get_closest.
     ```python
-    # To find the closest to the coordinates settlement, but not too far away, use get_closest.
     settlement = Settlement.objects.get_closest(latitude, longitude)
     ```
 
