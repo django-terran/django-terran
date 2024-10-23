@@ -33,6 +33,7 @@ class CurrencyAdmin(admin.ModelAdmin):
                 "fields": (
                     ("iso_4217_n3",),
                     ("iso_4217_a3",),
+                    ("version",),
                     ("is_enabled",),
                     ("name",),
                     ("decimal_digits",),
@@ -51,17 +52,23 @@ class CurrencyAdmin(admin.ModelAdmin):
     list_display = (
         "iso_4217_n3",
         "iso_4217_a3",
+        "version",
         "is_enabled",
         "decimal_digits",
     )
     list_display_links = (
         "iso_4217_n3",
         "iso_4217_a3",
+        "version",
+    )
+    list_filter = (
+        "version",
     )
     ordering = ("iso_4217_a3",)
     readonly_fields = (
         "iso_4217_n3",
         "iso_4217_a3",
+        "version",
         "decimal_digits",
         "name",
         "names_formatted",

@@ -20,6 +20,7 @@ class SettlementAdmin(admin.ModelAdmin):
                         "level1area",
                         "level2area",
                     ),
+                    ("version",),
                     (
                         "name",
                         "place_type",
@@ -45,6 +46,7 @@ class SettlementAdmin(admin.ModelAdmin):
     )
     list_display = (
         "id",
+        "version",
         "name",
         "place_type",
         "population",
@@ -54,9 +56,16 @@ class SettlementAdmin(admin.ModelAdmin):
     )
     list_display_links = (
         "id",
+        "version",
         "name",
     )
-    list_filter = ("place_type", Level2AreaFilter, Level1AreaFilter, CountryFilter)
+    list_filter = (
+        "place_type",
+        Level2AreaFilter,
+        Level1AreaFilter,
+        CountryFilter,
+        "version",
+    )
     ordering = (
         "country__iso_3166_a2",
         "level1area__iso_3166_a2",
@@ -76,6 +85,7 @@ class SettlementAdmin(admin.ModelAdmin):
         "names_formatted",
         "place_type",
         "population",
+        "version",
     )
     search_fields = (
         "names__de",

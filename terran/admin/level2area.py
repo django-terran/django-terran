@@ -19,6 +19,7 @@ class Level2AreaAdmin(admin.ModelAdmin):
                         "level1area",
                     ),
                     ("iso_3166_a2",),
+                    ("version",),
                     ("name",),
                     ("online_map_formatted",),
                     ("expando_formatted",),
@@ -35,6 +36,7 @@ class Level2AreaAdmin(admin.ModelAdmin):
     ]
     list_display = (
         "iso_3166_a2",
+        "version",
         "name",
         "level1area",
         "country",
@@ -43,7 +45,11 @@ class Level2AreaAdmin(admin.ModelAdmin):
         "iso_3166_a2",
         "name",
     )
-    list_filter = (Level1AreaFilter, CountryFilter)
+    list_filter = (
+        Level1AreaFilter,
+        CountryFilter,
+        "version",
+    )
     ordering = ("iso_3166_a2",)
     readonly_fields = (
         "country",
@@ -53,6 +59,7 @@ class Level2AreaAdmin(admin.ModelAdmin):
         "name",
         "names_formatted",
         "online_map_formatted",
+        "version",
     )
     search_fields = (
         "iso_3166_a2",

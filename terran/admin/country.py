@@ -47,6 +47,7 @@ class CountryAdmin(admin.ModelAdmin):
                         "iso_3166_a2",
                         "iso_3166_a3",
                     ),
+                    ("version",),
                     ("is_enabled",),
                     ("name",),
                     ("currency",),
@@ -134,13 +135,18 @@ class CountryAdmin(admin.ModelAdmin):
         "iso_3166_n3",
         "iso_3166_a2",
         "iso_3166_a3",
+        "version",
         "name",
     )
     list_display_links = (
         "iso_3166_n3",
         "iso_3166_a2",
         "iso_3166_a3",
+        "version",
         "name",
+    )
+    list_filter = (
+        "version",
     )
     ordering = ("iso_3166_a3",)
     readonly_fields = (
@@ -178,6 +184,7 @@ class CountryAdmin(admin.ModelAdmin):
         "phone_input_pattern",
         "phone_output_format_formatted",
         "phone_prefixes_formatted",
+        "version",
     )
     search_fields = (
         "iso_3166_a2",

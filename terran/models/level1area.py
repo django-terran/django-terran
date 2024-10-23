@@ -5,6 +5,7 @@ from django.db.models import CASCADE
 from django.db.models import CharField
 from django.db.models import ForeignKey
 from django.db.models import Index
+from django.db.models import IntegerField
 from django.db.models import JSONField
 from django.db.models import Manager
 from django.db.models import Model
@@ -27,6 +28,7 @@ class Level1Area(Model):
     id = AutoField(primary_key=True, editable=False)
     country = ForeignKey(Country, CASCADE, related_name="level1areas", editable=False)
     iso_3166_a2 = CharField(max_length=32, editable=False, verbose_name="ISO 3166 A2")
+    version = IntegerField(editable=False)
     names = JSONField(editable=False)
     expando = JSONField(default=dict)
 

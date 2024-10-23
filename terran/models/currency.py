@@ -26,6 +26,7 @@ class Currency(Model):
 
     iso_4217_n3 = IntegerField(primary_key=True, editable=False, verbose_name="ISO 4217 N3")
     iso_4217_a3 = CharField(max_length=3, editable=False, verbose_name="ISO 4217 A3")
+    version = IntegerField(editable=False)
     is_enabled = BooleanField(default=True)
     names = JSONField(editable=False)
     decimal_digits = IntegerField(editable=False)

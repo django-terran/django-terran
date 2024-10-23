@@ -41,6 +41,7 @@ class Country(Model):
     iso_3166_n3 = IntegerField(primary_key=True, editable=False, verbose_name="ISO 3166 N3")
     iso_3166_a2 = CharField(max_length=2, null=True, editable=False, verbose_name="ISO 3166 A2")
     iso_3166_a3 = CharField(max_length=3, editable=False, verbose_name="ISO 3166 A3")
+    version = IntegerField(editable=False)
     is_enabled = BooleanField(default=True)
     currency = ForeignKey(Currency, CASCADE, related_name="+", editable=False)
     names = JSONField(editable=False)
@@ -214,6 +215,7 @@ class CountryCurrency(Model):
     id = AutoField(primary_key=True, editable=False)
     country = ForeignKey(Country, CASCADE, related_name="+", editable=False)
     currency = CharField(max_length=3, editable=False, verbose_name="ISO 4217 A3")
+    version = IntegerField(editable=False)
     since = DateField(editable=False)
     until = DateField(editable=False, null=True)
 
