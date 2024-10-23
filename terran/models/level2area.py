@@ -27,9 +27,7 @@ class Level2Area(Model):
 
     id = AutoField(primary_key=True, editable=False)
     country = ForeignKey(Country, CASCADE, related_name="+", editable=False)
-    level1area = ForeignKey(
-        Level1Area, CASCADE, related_name="level2areas", editable=False
-    )
+    level1area = ForeignKey(Level1Area, CASCADE, related_name="level2areas", editable=False)
     iso_3166_a2 = CharField(max_length=32, editable=False, verbose_name="ISO 3166 A2")
     names = JSONField(editable=False)
     expando = JSONField(default=dict)

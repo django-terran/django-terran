@@ -38,12 +38,8 @@ class CountryManager(Manager):
 class Country(Model):
     objects = CountryManager()
 
-    iso_3166_n3 = IntegerField(
-        primary_key=True, editable=False, verbose_name="ISO 3166 N3"
-    )
-    iso_3166_a2 = CharField(
-        max_length=2, null=True, editable=False, verbose_name="ISO 3166 A2"
-    )
+    iso_3166_n3 = IntegerField(primary_key=True, editable=False, verbose_name="ISO 3166 N3")
+    iso_3166_a2 = CharField(max_length=2, null=True, editable=False, verbose_name="ISO 3166 A2")
     iso_3166_a3 = CharField(max_length=3, editable=False, verbose_name="ISO 3166 A3")
     is_enabled = BooleanField(default=True)
     currency = ForeignKey(Currency, CASCADE, related_name="+", editable=False)
@@ -56,23 +52,15 @@ class Country(Model):
     address_settlement_names = JSONField(null=True, editable=False)
     address_street_names = JSONField(null=True, editable=False)
     address_postcode_names = JSONField(null=True, editable=False)
-    address_postcode_input_pattern = CharField(
-        max_length=256, null=True, editable=False
-    )
-    address_postcode_input_example = CharField(
-        max_length=256, null=True, editable=False
-    )
+    address_postcode_input_pattern = CharField(max_length=256, null=True, editable=False)
+    address_postcode_input_example = CharField(max_length=256, null=True, editable=False)
     phone_names = JSONField(null=True, editable=False)
     phone_prefixes = JSONField(editable=False)
     phone_input_pattern = CharField(max_length=256, editable=False)
     phone_input_example = CharField(max_length=256, editable=False)
     phone_output_format = JSONField(max_length=256, null=True, editable=False)
-    organization_id_names = JSONField(
-        null=True, editable=False, verbose_name="Organization ID names"
-    )
-    organization_id_abbreviations = JSONField(
-        null=True, editable=False, verbose_name="Organization ID abbreviations"
-    )
+    organization_id_names = JSONField(null=True, editable=False, verbose_name="Organization ID names")
+    organization_id_abbreviations = JSONField(null=True, editable=False, verbose_name="Organization ID abbreviations")
     organization_id_input_pattern = CharField(
         max_length=256,
         null=True,
@@ -91,12 +79,8 @@ class Country(Model):
         editable=False,
         verbose_name="Organization ID output format",
     )
-    person_id_names = JSONField(
-        null=True, editable=False, verbose_name="Person ID names"
-    )
-    person_id_abbreviations = JSONField(
-        null=True, editable=False, verbose_name="Person ID abbreviations"
-    )
+    person_id_names = JSONField(null=True, editable=False, verbose_name="Person ID names")
+    person_id_abbreviations = JSONField(null=True, editable=False, verbose_name="Person ID abbreviations")
     person_id_input_pattern = CharField(
         max_length=256,
         null=True,
@@ -116,15 +100,9 @@ class Country(Model):
         verbose_name="Person ID output format",
     )
     iban_names = JSONField(null=True, editable=False, verbose_name="IBAN Names")
-    iban_input_pattern = CharField(
-        max_length=256, null=True, editable=False, verbose_name="IBAN input pattern"
-    )
-    iban_input_example = CharField(
-        max_length=256, null=True, editable=False, verbose_name="IBAN input example"
-    )
-    iban_output_format = JSONField(
-        max_length=256, null=True, editable=False, verbose_name="IBAN output format"
-    )
+    iban_input_pattern = CharField(max_length=256, null=True, editable=False, verbose_name="IBAN input pattern")
+    iban_input_example = CharField(max_length=256, null=True, editable=False, verbose_name="IBAN input example")
+    iban_output_format = JSONField(max_length=256, null=True, editable=False, verbose_name="IBAN output format")
 
     class Meta:
         verbose_name = "Country"
@@ -220,18 +198,12 @@ class CountryCurrencyManager(Manager):
 
         if len(code) == 2:
             if (code[0] >= "A") and (code[0] <= "Z"):
-                return self.get(
-                    country__iso_3166_a2=country_code, currency=currency_code
-                )
+                return self.get(country__iso_3166_a2=country_code, currency=currency_code)
         elif len(code) == 3:
             if (code[0] >= "A") and (code[0] <= "Z"):
-                return self.get(
-                    country__iso_3166_a3=country_code, currency=currency_code
-                )
+                return self.get(country__iso_3166_a3=country_code, currency=currency_code)
             elif (code[0] >= "0") and (code[0] <= "9"):
-                return self.get(
-                    country__iso_3166_n3=int(country_code), currency=currency_code
-                )
+                return self.get(country__iso_3166_n3=int(country_code), currency=currency_code)
 
         raise Country.DoesNotExist()
 

@@ -9,13 +9,6 @@ def _get_localized_name(names: dict[str, str]):
     language_code = get_language()
 
     if language_code:
-        return (
-            names.get(language_code)
-            or names.get(settings.LANGUAGE_CODE)
-            or names.get("en")
-            or list(names.values())[0]
-        )
+        return names.get(language_code) or names.get(settings.LANGUAGE_CODE) or names.get("en") or list(names.values())[0]
 
-    return (
-        names.get(settings.LANGUAGE_CODE) or names.get("en") or list(names.values())[0]
-    )
+    return names.get(settings.LANGUAGE_CODE) or names.get("en") or list(names.values())[0]

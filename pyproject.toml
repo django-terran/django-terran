@@ -23,6 +23,9 @@ dependencies = [
 Homepage = "https://github.com/django-terran/django-terran/"
 Issues = "https://github.com/django-terran/django-terran/issues"
 
+[tool.black]
+line-length = 160
+
 [tool.setuptools.dynamic]
 version = {attr = "terran.__version__"}
 

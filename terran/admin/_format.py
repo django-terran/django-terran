@@ -53,12 +53,7 @@ def create_name_formatted(attribute_name, /, **kwargs):
         if not value:
             return ""
 
-        value = sorted(
-            [
-                (LANGUAGE_MAP.get(language, language), name)
-                for language, name in value.items()
-            ]
-        )
+        value = sorted([(LANGUAGE_MAP.get(language, language), name) for language, name in value.items()])
 
         column_number = min(5, max(1, (len(value) + 9) // 10))
         row_number = (len(value) + column_number - 1) // column_number

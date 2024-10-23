@@ -198,51 +198,21 @@ class CountryAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
 
-    address_input_layout_formatted = create_list_formatted(
-        "address_input_layout", description="Address input layout"
-    )
-    address_level1area_names_formatted = create_name_formatted(
-        "address_level1area_names", description="Address level 1 area"
-    )
-    address_level2area_names_formatted = create_name_formatted(
-        "address_level2area_names", description="Address level 2 area"
-    )
-    address_postcode_names_formatted = create_name_formatted(
-        "address_postcode_names", description="Address post code names"
-    )
-    address_settlement_names_formatted = create_name_formatted(
-        "address_settlement_names", description="Address settlement names"
-    )
-    address_street_names_formatted = create_name_formatted(
-        "address_street_names", description="Address street names"
-    )
+    address_input_layout_formatted = create_list_formatted("address_input_layout", description="Address input layout")
+    address_level1area_names_formatted = create_name_formatted("address_level1area_names", description="Address level 1 area")
+    address_level2area_names_formatted = create_name_formatted("address_level2area_names", description="Address level 2 area")
+    address_postcode_names_formatted = create_name_formatted("address_postcode_names", description="Address post code names")
+    address_settlement_names_formatted = create_name_formatted("address_settlement_names", description="Address settlement names")
+    address_street_names_formatted = create_name_formatted("address_street_names", description="Address street names")
     iban_names_formatted = create_name_formatted("iban_names", description="IBAN names")
-    iban_output_format_formatted = create_dict_formatted(
-        "iban_output_format", description="IBAN output format"
-    )
+    iban_output_format_formatted = create_dict_formatted("iban_output_format", description="IBAN output format")
     languages_formatted = create_list_formatted("languages", description="Languages")
     names_formatted = create_name_formatted("names", description="Names")
-    organization_id_abbreviations_formatted = create_name_formatted(
-        "organization_id_abbreviations", description="Organization ID abbreviations"
-    )
-    organization_id_names_formatted = create_name_formatted(
-        "organization_id_names", description="Organization ID names"
-    )
-    organization_id_output_format_formatted = create_dict_formatted(
-        "organization_id_output_format", description="Organization ID output format"
-    )
-    person_id_abbreviations_formatted = create_name_formatted(
-        "person_id_abbreviations", description="Person ID abbreviations"
-    )
-    person_id_names_formatted = create_name_formatted(
-        "person_id_names", description="Person ID names"
-    )
-    person_id_output_format_formatted = create_dict_formatted(
-        "person_id_output_format", description="Person ID output format"
-    )
-    phone_output_format_formatted = create_dict_formatted(
-        "phone_output_format", description="Phone output format"
-    )
-    phone_prefixes_formatted = create_list_formatted(
-        "phone_prefixes", description="Phone prefixes"
-    )
+    organization_id_abbreviations_formatted = create_name_formatted("organization_id_abbreviations", description="Organization ID abbreviations")
+    organization_id_names_formatted = create_name_formatted("organization_id_names", description="Organization ID names")
+    organization_id_output_format_formatted = create_dict_formatted("organization_id_output_format", description="Organization ID output format")
+    person_id_abbreviations_formatted = create_name_formatted("person_id_abbreviations", description="Person ID abbreviations")
+    person_id_names_formatted = create_name_formatted("person_id_names", description="Person ID names")
+    person_id_output_format_formatted = create_dict_formatted("person_id_output_format", description="Person ID output format")
+    phone_output_format_formatted = create_dict_formatted("phone_output_format", description="Phone output format")
+    phone_prefixes_formatted = create_list_formatted("phone_prefixes", description="Phone prefixes")

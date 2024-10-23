@@ -30,9 +30,7 @@ def get_context_from_request(form_data: dict):
 
     context = {
         "entity": entity,
-        "address_country_choices": sorted(
-            list(Country.objects.filter(is_enabled=True)), key=lambda c: c.name
-        ),
+        "address_country_choices": sorted(list(Country.objects.filter(is_enabled=True)), key=lambda c: c.name),
         "address_level1area_choices": [],
         "address_level2area_choices": [],
         "address_settlement_choices": [],
@@ -183,9 +181,7 @@ def get_context_from_request(form_data: dict):
 
     if address_country and address_level1area_iso3166_a2:
         try:
-            address_level1area = address_country.level1areas.get(
-                iso_3166_a2=address_level1area_iso3166_a2
-            )
+            address_level1area = address_country.level1areas.get(iso_3166_a2=address_level1area_iso3166_a2)
             context["address_level1area"]["value"] = address_level1area.iso_3166_a2
         except Level1Area.DoesNotExist:
             pass
@@ -202,9 +198,7 @@ def get_context_from_request(form_data: dict):
 
     if address_level1area and address_level2area_iso3166_a2:
         try:
-            address_level2area = address_level1area.level2areas.get(
-                iso_3166_a2=address_level2area_iso3166_a2
-            )
+            address_level2area = address_level1area.level2areas.get(iso_3166_a2=address_level2area_iso3166_a2)
             context["address_level2area"]["value"] = address_level2area.iso_3166_a2
         except Level2Area.DoesNotExist:
             pass
@@ -214,10 +208,7 @@ def get_context_from_request(form_data: dict):
         or (
             (len(address_level1area_choices) > 0)
             and (address_level1area is not None)
-            and (
-                (len(address_level2area_choices) == 0)
-                or (address_level2area is not None)
-            )
+            and ((len(address_level2area_choices) == 0) or (address_level2area is not None))
         )
     )
 
@@ -227,22 +218,12 @@ def get_context_from_request(form_data: dict):
         if address_level2area:
             address_settlement_choices += list(address_level2area.settlements.all())
         elif address_level1area:
-            address_settlement_choices += list(
-                address_level1area.settlements.filter(level2area__isnull=True)
-            )
+            address_settlement_choices += list(address_level1area.settlements.filter(level2area__isnull=True))
         else:
-            address_settlement_choices += list(
-                address_country.settlements.filter(
-                    level1area__isnull=True, level2area__isnull=True
-                )
-            )
+            address_settlement_choices += list(address_country.settlements.filter(level1area__isnull=True, level2area__isnull=True))
 
-        address_settlement_choices = sorted(
-            address_settlement_choices, key=lambda settlement: -settlement.population
-        )
-        address_settlement_choices = address_settlement_choices[:5] + sorted(
-            address_settlement_choices[5:], key=lambda settlement: settlement.name
-        )
+        address_settlement_choices = sorted(address_settlement_choices, key=lambda settlement: -settlement.population)
+        address_settlement_choices = address_settlement_choices[:5] + sorted(address_settlement_choices[5:], key=lambda settlement: settlement.name)
         context["address_settlement_choices"] = address_settlement_choices
 
         # Many capitals are settlements AND administrative divisions.
@@ -264,38 +245,24 @@ def get_context_from_request(form_data: dict):
             match field_name:
                 case "level1area":
                     if address_level1area_choices:
-                        context["address_level1area"][
-                            "label"
-                        ] = address_country.address_level1area_name
+                        context["address_level1area"]["label"] = address_country.address_level1area_name
                         context["address_level1area"]["enabled"] = True
                         context["address_level1area"]["order"] = layout_part_order
                         has_level1area = True
                 case "level2area":
                     if address_level2area_choices:
-                        context["address_level2area"][
-                            "label"
-                        ] = address_country.address_level2area_name
+                        context["address_level2area"]["label"] = address_country.address_level2area_name
                         context["address_level2area"]["enabled"] = True
                         context["address_level2area"]["order"] = layout_part_order
                 case "postcode":
-                    context["address_postcode"][
-                        "label"
-                    ] = address_country.address_postcode_name
-                    context["address_postcode"]["enabled"] = is_hierarchy_complete or (
-                        not has_level1area
-                    )
+                    context["address_postcode"]["label"] = address_country.address_postcode_name
+                    context["address_postcode"]["enabled"] = is_hierarchy_complete or (not has_level1area)
                     context["address_postcode"]["visible"] = True
                     context["address_postcode"]["order"] = layout_part_order
-                    context["address_postcode"][
-                        "pattern"
-                    ] = address_country.address_postcode_input_pattern
-                    context["address_postcode"][
-                        "example"
-                    ] = address_country.address_postcode_input_example
+                    context["address_postcode"]["pattern"] = address_country.address_postcode_input_pattern
+                    context["address_postcode"]["example"] = address_country.address_postcode_input_example
                 case "settlement":
-                    context["address_settlement"][
-                        "label"
-                    ] = address_country.address_settlement_name
+                    context["address_settlement"]["label"] = address_country.address_settlement_name
                     context["address_settlement"]["enabled"] = is_hierarchy_complete
                     context["address_settlement"]["visible"] = True
                     context["address_settlement"]["order"] = layout_part_order
@@ -309,18 +276,10 @@ def get_context_from_request(form_data: dict):
                         context["address_street"]["order"] = layout_part_order
                     elif isinstance(name, list):
                         for line_index, line_name in enumerate(name):
-                            context[f"address_street_line{line_index}"][
-                                "label"
-                            ] = line_name
-                            context[f"address_street_line{line_index}"][
-                                "enabled"
-                            ] = is_hierarchy_complete
-                            context[f"address_street_line{line_index}"][
-                                "visible"
-                            ] = True
-                            context[f"address_street_line{line_index}"][
-                                "order"
-                            ] = layout_part_order
+                            context[f"address_street_line{line_index}"]["label"] = line_name
+                            context[f"address_street_line{line_index}"]["enabled"] = is_hierarchy_complete
+                            context[f"address_street_line{line_index}"]["visible"] = True
+                            context[f"address_street_line{line_index}"]["order"] = layout_part_order
                             layout_part_order += 1
 
     if address_country:
@@ -331,12 +290,8 @@ def get_context_from_request(form_data: dict):
                 context["person_id"]["enabled"] = True
                 context["person_id"]["visible"] = True
                 context["person_id"]["label"] = address_country.person_id_name
-                context["person_id"][
-                    "pattern"
-                ] = address_country.person_id_input_pattern
-                context["person_id"][
-                    "example"
-                ] = address_country.person_id_input_example
+                context["person_id"]["pattern"] = address_country.person_id_input_pattern
+                context["person_id"]["example"] = address_country.person_id_input_example
 
             context["person_phone"]["enabled"] = True
             context["person_phone"]["visible"] = True
@@ -349,25 +304,15 @@ def get_context_from_request(form_data: dict):
             if address_country.organization_id_names:
                 context["organization_id"]["enabled"] = True
                 context["organization_id"]["visible"] = True
-                context["organization_id"][
-                    "label"
-                ] = address_country.organization_id_name
-                context["organization_id"][
-                    "pattern"
-                ] = address_country.organization_id_input_pattern
-                context["organization_id"][
-                    "example"
-                ] = address_country.organization_id_input_example
+                context["organization_id"]["label"] = address_country.organization_id_name
+                context["organization_id"]["pattern"] = address_country.organization_id_input_pattern
+                context["organization_id"]["example"] = address_country.organization_id_input_example
 
             context["organization_phone"]["enabled"] = True
             context["organization_phone"]["visible"] = True
             context["organization_phone"]["label"] = address_country.phone_name
-            context["organization_phone"][
-                "pattern"
-            ] = address_country.phone_input_pattern
-            context["organization_phone"][
-                "example"
-            ] = address_country.phone_input_example
+            context["organization_phone"]["pattern"] = address_country.phone_input_pattern
+            context["organization_phone"]["example"] = address_country.phone_input_example
 
         if address_country.iban_names:
             context["bank_iban"]["enabled"] = True
@@ -407,35 +352,17 @@ def get_context_from_request(form_data: dict):
             Context(
                 {
                     "has_country": address_country is not None,
-                    "has_level1area": (address_country is not None)
-                    and (address_level1area is not None),
-                    "has_level2area": (address_country is not None)
-                    and (address_level2area is not None),
+                    "has_level1area": (address_country is not None) and (address_level1area is not None),
+                    "has_level2area": (address_country is not None) and (address_level2area is not None),
                     "has_postcode": len(address_postcode) > 0,
                     "has_recipient": len(recipient_text) > 0,
                     "has_settlement": len(address_settlement) > 0,
                     "has_street": len(street_text) > 0,
                     "country_name": address_country.name if address_country else None,
-                    "level1area_code": (
-                        address_level1area.iso_3166_a2[2:].upper()
-                        if (address_country and address_level1area)
-                        else None
-                    ),
-                    "level1area_name": (
-                        address_level1area.name
-                        if (address_country and address_level1area)
-                        else None
-                    ),
-                    "level2area_code": (
-                        address_level2area.iso_3166_a2[2:].upper()
-                        if (address_country and address_level2area)
-                        else None
-                    ),
-                    "level2area_name": (
-                        address_level2area.name
-                        if (address_country and address_level2area)
-                        else None
-                    ),
+                    "level1area_code": (address_level1area.iso_3166_a2[2:].upper() if (address_country and address_level1area) else None),
+                    "level1area_name": (address_level1area.name if (address_country and address_level1area) else None),
+                    "level2area_code": (address_level2area.iso_3166_a2[2:].upper() if (address_country and address_level2area) else None),
+                    "level2area_name": (address_level2area.name if (address_country and address_level2area) else None),
                     "postcode_text": address_postcode,
                     "recipient_text": recipient_text,
                     "settlement_text": address_settlement,
@@ -503,13 +430,11 @@ class SignUpFindMeView(View):
         if not settlement:
             return JsonResponse(data={})
 
-        return JsonResponse(data={
-            "address_country": settlement.country.iso_3166_a2,
-            "address_level1area": (
-                settlement.level1area.iso_3166_a2 if settlement.level1area else None
-            ),
-            "address_level2area": (
-                settlement.level2area.iso_3166_a2 if settlement.level2area else None
-            ),
-            "address_settlement": settlement.name,
-        })
+        return JsonResponse(
+            data={
+                "address_country": settlement.country.iso_3166_a2,
+                "address_level1area": (settlement.level1area.iso_3166_a2 if settlement.level1area else None),
+                "address_level2area": (settlement.level2area.iso_3166_a2 if settlement.level2area else None),
+                "address_settlement": settlement.name,
+            }
+        )

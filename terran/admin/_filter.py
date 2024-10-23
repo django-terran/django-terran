@@ -39,12 +39,7 @@ class Level1AreaFilter(admin.SimpleListFilter):
 
         if country_iso_3166_a2:
             return sorted(
-                [
-                    (level1area.iso_3166_a2, level1area.name)
-                    for level1area in Level1Area.objects.filter(
-                        country__iso_3166_a2=country_iso_3166_a2
-                    )
-                ],
+                [(level1area.iso_3166_a2, level1area.name) for level1area in Level1Area.objects.filter(country__iso_3166_a2=country_iso_3166_a2)],
                 key=lambda l: l[1],
             )
 
@@ -54,9 +49,7 @@ class Level1AreaFilter(admin.SimpleListFilter):
         country_iso_3166_a2 = request.GET.get("country")
         level1area_iso_3166_a2 = self.used_parameters.get("level1area")
 
-        if level1area_iso_3166_a2 and level1area_iso_3166_a2.lower().startswith(
-            country_iso_3166_a2.lower()
-        ):
+        if level1area_iso_3166_a2 and level1area_iso_3166_a2.lower().startswith(country_iso_3166_a2.lower()):
             queryset = queryset.filter(level1area__iso_3166_a2=level1area_iso_3166_a2)
 
         return queryset
@@ -92,14 +85,8 @@ class Level2AreaFilter(admin.SimpleListFilter):
         level1area_iso_3166_a2 = self.used_parameters.get("level1area")
         level2area_iso_3166_a2 = self.used_parameters.get("level1area")
 
-        if (
-            level1area_iso_3166_a2
-            and level1area_iso_3166_a2.lower().startswith(country_iso_3166_a2.lower())
-        ) and (
-            level2area_iso_3166_a2
-            and level2area_iso_3166_a2.lower().startswith(
-                level1area_iso_3166_a2.lower()
-            )
+        if (level1area_iso_3166_a2 and level1area_iso_3166_a2.lower().startswith(country_iso_3166_a2.lower())) and (
+            level2area_iso_3166_a2 and level2area_iso_3166_a2.lower().startswith(level1area_iso_3166_a2.lower())
         ):
             queryset = queryset.filter(level2area__iso_3166_a2=level2area_iso_3166_a2)
 

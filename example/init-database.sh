@@ -12,7 +12,7 @@ cd "$(dirname "$0")"
 
 rm ~db.sqlite3 || true
 
-./manage.py makemigrations
+./manage.py makemigrations terran
 ./manage.py migrate
 ./manage.py createsuperuser --username admin --email admin@example.com
 

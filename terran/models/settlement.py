@@ -71,12 +71,8 @@ class Settlement(Model):
 
     id = IntegerField(primary_key=True, editable=False)
     country = ForeignKey(Country, CASCADE, related_name="settlements", editable=False)
-    level1area = ForeignKey(
-        Level1Area, CASCADE, related_name="settlements", null=True, editable=False
-    )
-    level2area = ForeignKey(
-        Level2Area, CASCADE, related_name="settlements", null=True, editable=False
-    )
+    level1area = ForeignKey(Level1Area, CASCADE, related_name="settlements", null=True, editable=False)
+    level2area = ForeignKey(Level2Area, CASCADE, related_name="settlements", null=True, editable=False)
     names = JSONField(editable=False)
     place_type = IntegerField(choices=SETTLEMENT_PLACE_TYPE_CHOICES)
     population = IntegerField()
