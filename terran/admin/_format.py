@@ -30,7 +30,7 @@ def create_list_formatted(attribute_name, /, convert=None, **kwargs):
         if not value:
             return ""
 
-        result = '<ol type="i">'
+        result = '<ol type="a">'
 
         for item in value:
             if callable(convert):

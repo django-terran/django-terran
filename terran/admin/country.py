@@ -222,4 +222,4 @@ class CountryAdmin(admin.ModelAdmin):
     person_id_names_formatted = create_name_formatted("person_id_names", description="Person ID names")
     person_id_output_format_formatted = create_dict_formatted("person_id_output_format", description="Person ID output format")
     phone_output_format_formatted = create_dict_formatted("phone_output_format", description="Phone output format")
-    phone_prefixes_formatted = create_list_formatted("phone_prefixes", description="Phone prefixes")
+    phone_prefixes_formatted = create_list_formatted("phone_prefixes", convert=lambda p: "+" + p, description="Phone prefixes")
